@@ -21,13 +21,13 @@ const agregadoSchema = z.object({
   cache_write_tokens: numero,
   p50_latency_ms: numero,
   p95_latency_ms: numero,
-  turnos: numero,
-  custo_dos_turnos_cents: numero,
 });
 
 /** O `jsonb` devolvido por `fn_uso_de_ia`. */
 export const usoDeIaSchema = z.object({
-  totais: agregadoSchema,
+  // Turnos só nos totais: o custo de um turno é o do job inteiro, e ele não se
+  // reparte por dia nem por purpose sem mudar de definição.
+  totais: agregadoSchema.extend({ turnos: numero, custo_dos_turnos_cents: numero }),
   dias: z.array(agregadoSchema.extend({ dia: z.string() })),
   purposes: z.array(agregadoSchema.extend({ purpose: z.string() })),
   inbounds: z.record(z.string(), numero),

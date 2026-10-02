@@ -52,6 +52,28 @@ describe("a rota soma no banco, não sobre o que o PostgREST deixou passar", () 
     expect(bloco).toBeGreaterThan(-1);
     expect(bloco).toBeLessThan(BASELINE.search(/^-- ---- VARREDURA anon:/m));
   });
+
+  // O comportamento é provado no invariante (Postgres real); aqui fica a forma,
+  // que se mede sem banco e reprova o retorno dos dois defeitos de régua.
+  it("turno conta só agent_turn que deu certo, e não herda o filtro de purpose", () => {
+    const corpo = definicao(MIGRATION) ?? "";
+    const cte = (nome: string) => {
+      const inicio = corpo.indexOf(`  ${nome} as (`);
+      return inicio === -1 ? "" : corpo.slice(inicio, corpo.indexOf("\n  ),", inicio));
+    };
+    const jobs = cte("jobs_de_turno");
+    const turnos = cte("turnos");
+    expect(jobs, "a chamada agent_turn que falhou (status 'erro') virava turno").toMatch(
+      /c\.status = 'ok'/,
+    );
+    for (const [nome, trecho] of [["jobs_de_turno", jobs], ["turnos", turnos]] as const) {
+      expect(trecho, `${nome} sumiu da função`).toMatch(/from public\.llm_calls c/);
+      expect(trecho, `${nome} filtra por purpose: o custo do turno deixa de ser o do job`).not.toMatch(
+        /p_purpose/,
+      );
+    }
+    expect(turnos, "o custo do turno só pode filtrar o agente pelo job").not.toMatch(/p_agent_id/);
+  });
 });
 
 const zero = {
@@ -63,8 +85,6 @@ const zero = {
   cache_write_tokens: 0,
   p50_latency_ms: 0,
   p95_latency_ms: 0,
-  turnos: 0,
-  custo_dos_turnos_cents: 0,
 };
 
 const range = { from: new Date("2026-09-01T00:00:00Z"), to: new Date("2026-09-03T00:00:00Z") };

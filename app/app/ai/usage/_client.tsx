@@ -114,7 +114,8 @@ export function UsageDashboardClient({ agents, initial }: Props) {
               hint={t("cada resposta do agente pode fazer várias")}
             />
             {/*
-              Turno = um job distinto com chamada `agent_turn`. `llm_calls.job_id`
+              Turno = um job distinto com chamada `agent_turn` que deu certo, e
+              o custo dele é o do job inteiro mesmo com filtro. `llm_calls.job_id`
               vira null quando a poda da fila apaga o job, então o turno antigo
               deixa de contar — o hint diz isso em vez de esconder.
             */}
