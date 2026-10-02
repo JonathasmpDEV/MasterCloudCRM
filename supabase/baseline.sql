@@ -45879,10 +45879,13 @@ alter table public.ai_agent_versions
 -- 1. `send_ledger` por contato. "1º outbound" (`countPriorAcceptedSends`,
 --    disclosure e LGPD) conta envios `accepted` do contato DENTRO da transação
 --    que segura o lock do número; `ultimaInboundJaRespondida` procura envio
---    `accepted`/`queued` do mesmo contato a cada turno. O único índice era
---    (organization_id, created_at). O predicado cobre os dois status porque
---    `status = 'accepted'` implica `status in ('accepted','queued')`: um índice
---    serve as duas consultas.
+--    `accepted`/`queued` do mesmo contato a cada turno. Nenhum índice começava
+--    por contato (o de busca é (organization_id, created_at)). O predicado
+--    cobre os dois status porque `status = 'accepted'` implica
+--    `status in ('accepted','queued')`: um índice serve as duas consultas.
+--    Custo aceito: `status` entra no predicado, então a troca de status de um
+--    envio deixa de ser HOT update — uma escrita a mais por envio, contra uma
+--    varredura por contato a cada turno.
 -- 2. `llm_calls.job_id`. `recordRunMetrics` soma as chamadas do run por job_id,
 --    e o `on delete set null` vindo de `job_queue` faz a poda diária
 --    (`fn_podar_fila_de_jobs`, até 1000 jobs por chamada) varrer a tabela uma vez
