@@ -1,8 +1,9 @@
 /**
  * Marca da instalação — nome e logo configuráveis pelo `.env`, SEM rebuild.
  *
- * Por que existe: quem instala o DeskcommCRM para clientes (agência, revendedor)
- * precisa da própria marca na interface. Fazer isso editando o código quebraria o
+ * Por que existe: quem instala o MasterCloudCRM para clientes (agência, revendedor)
+ * precisa da própria marca na interface. (Este fork já nasce com a marca MasterCloud;
+ * a configuração abaixo continua valendo por cima dela.) Fazer isso editando o código quebraria o
  * caminho de atualização — `update.sh` puxa a imagem nova e o patch local se perde,
  * que é exatamente a dor nº 1 de quem hospeda o próprio sistema. Configuração em
  * `.env` sobrevive a toda atualização.
@@ -16,7 +17,7 @@
  * runtime em vez de lida do bundle.
  */
 
-export const DEFAULT_APP_NAME = "DeskcommCRM";
+export const DEFAULT_APP_NAME = "MasterCloudCRM";
 
 export type Branding = {
   /** Nome exibido na interface e nos títulos de página. */

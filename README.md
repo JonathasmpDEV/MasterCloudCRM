@@ -3,11 +3,11 @@
 🇧🇷 Português · [🇺🇸 English](README.en.md) · [🇪🇸 Español](README.es.md)
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/deskcomm-logo-dark.svg">
-  <img src="docs/brand/deskcomm-logo.svg" alt="Deskcomm CRM" width="420">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/mastercloud-logo-dark.svg">
+  <img src="docs/brand/mastercloud-logo.svg" alt="MasterCloud CRM" width="420">
 </picture>
 
-# 🛠️ DeskcommCRM — o Sistema Operacional de Vendas com IA, open source, pro WhatsApp
+# MasterCloudCRM — o Sistema Operacional de Vendas com IA, pro WhatsApp
 
 **Agentes de IA que atendem, qualificam e vendem no WhatsApp — dentro de um CRM open source rodando no seu servidor.**
 **Sem mensalidade, sem feature travada, seus dados com você. A alternativa aberta a Kommo, Octadesk e Intercom.**
@@ -16,12 +16,29 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript)](https://www.typescriptlang.org)
 [![Supabase](https://img.shields.io/badge/Supabase-Postgres%2BAuth%2BStorage-3ecf8e?logo=supabase)](https://supabase.com)
 [![Self-hosted](https://img.shields.io/badge/self--hosted-1%20comando-orange)](hostgator-setup-kit/)
-[![CI](https://github.com/melgarafael/DeskcommCRM/actions/workflows/ci.yml/badge.svg)](https://github.com/melgarafael/DeskcommCRM/actions/workflows/ci.yml)
+[![CI](https://github.com/JonathasmpDEV/MasterCloudCRM/actions/workflows/ci.yml/badge.svg)](https://github.com/JonathasmpDEV/MasterCloudCRM/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 [**⚡ Instalar**](#-instalar-na-sua-vps-o-caminho-principal) · [**🔄 Atualizar**](#-atualizar) · [**🧭 Visão**](VISION.md) · [**🏗️ Arquitetura**](ARCHITECTURE.md) · [**🤝 Contribuir**](CONTRIBUTING.md) · [**🗺️ Roadmap**](#%EF%B8%8F-roadmap)
 
 </div>
+
+---
+
+> ### 🔀 Sobre este repositório
+>
+> O **MasterCloudCRM** é um fork do [DeskcommCRM](https://github.com/melgarafael/DeskcommCRM)
+> (MIT — a licença e os créditos originais seguem em [LICENSE](LICENSE)). O código do
+> produto, o schema e a doutrina são os do upstream; este fork muda a **marca** (nome,
+> logotipo, cores, tipografia) para o visual do painel Mission Control.
+>
+> - **Variáveis de ambiente:** copie [`.env.example`](.env.example) para `.env.local` — o
+>   cabeçalho dele diz o que obter, onde, e o que substituir.
+> - **Marca:** [`docs/brand/`](docs/brand/README.md). O padrão do produto é MasterCloudCRM;
+>   `APP_NAME`, `APP_LOGO_URL` e `APP_ACCENT_HEX` no `.env` continuam sobrescrevendo.
+> - **Instaladores e imagens Docker** (`hostgator-setup-kit/`, `ghcr.io/…`) ainda são os do
+>   upstream e mantêm o nome Deskcomm nos textos de instalação.
+> - Para trazer novidades do upstream: `git fetch upstream && git merge upstream/main`.
 
 ---
 

@@ -481,6 +481,8 @@ const schema = z.object({
   // Nuvemshop — opcional (template genérico open-source). Só exigidas quando
   // NUVEMSHOP_ENABLED=true; o runtime já degrada via getConfig()==null.
   NUVEMSHOP_APP_ID: z.string().optional().default(""),
+  // E-mail de contato que a Nuvemshop exige no User-Agent (`MasterCloudCRM (email)`).
+  NUVEMSHOP_CONTACT_EMAIL: z.string().optional().default(""),
   NUVEMSHOP_CLIENT_ID: z.string().optional().default(""),
   NUVEMSHOP_CLIENT_SECRET: z.string().optional().default(""),
   NUVEMSHOP_ENABLED: z
@@ -526,7 +528,7 @@ const schema = z.object({
   APP_NAME: z.string().optional().default(""),
   APP_LOGO_URL: z.string().optional().default(""),
   /**
-   * Cor da marca — um hex (`#506d48`), do qual `lib/branding/` deriva a rampa
+   * Cor da marca — um hex (`#e31124`), do qual `lib/branding/` deriva a rampa
    * inteira. Vazio = o produto se pinta com a cor dele.
    *
    * `optional().default("")` e NUNCA `required()`, e o motivo é o modo de falha,
