@@ -4,11 +4,13 @@
 
 | Arquivo | O que é |
 |---|---|
-| `deskcomm-icon.svg` | O símbolo: D aberto com um módulo quadrado destacado. Quadrado de 216. |
-| `deskcomm-logo.svg` | Logotipo para fundo claro — símbolo em sálvia `#506d48`, nome em `#1c1a16`, "CRM" em `#5d594f`. |
-| `deskcomm-logo-dark.svg` | Logotipo para fundo escuro — sálvia `#82a077`, nome em `#f5f4ef`, "CRM" em `#8e8b7f`. |
+| `mastercloud-icon.svg` | O símbolo: um M em silhueta de nuvem com um módulo quadrado no canto da curva direita. Quadrado de 216. |
+| `mastercloud-logo.svg` | Logotipo para fundo claro — símbolo em brasa `#e31124`, nome em `#171009`, "CRM" em `#645545`. |
+| `mastercloud-logo-dark.svg` | Logotipo para fundo escuro — brasa `#ff393c`, nome em `#f5eede`, "CRM" em `#aba08e`. |
 
-O texto do logotipo já está convertido em caminhos: nenhum arquivo depende de fonte.
+O texto do logotipo já está convertido em caminhos: nenhum arquivo depende de fonte. O nome está em Instrument Serif e o "CRM" em JetBrains Mono (as fontes do Mission Control, OFL, em `app/fonts/mc-*`); o desenho foi gerado a partir delas com `fontkit`.
+
+> **Pendente:** `og-card.html` e `og-social-preview.png` ainda carregam a marca Deskcomm (D + sálvia) do upstream. Eles só aparecem no card de compartilhamento do GitHub e precisam ser refeitos a partir de `mastercloud-logo.svg`.
 
 **Estes SVGs são a fonte; o app NÃO os lê.** A geometria está copiada em
 `lib/branding/desenho.ts` e é desenhada inline por `components/branding/MarcaDoProduto.tsx`
@@ -76,4 +78,4 @@ mentindo, ou é refeito do zero com outra identidade.
   demanda deixa ao atravessar o sistema, terminando no follow-up — o mecanismo
   anti-morte. É o argumento do produto mostrado, não adjetivado.
 - Card de compartilhamento **sempre** carrega o logotipo (inline no HTML, lido de
-  `deskcomm-logo.svg`). Sem ele, quem vê a imagem não sabe de quem ela é.
+  `mastercloud-logo.svg`). Sem ele, quem vê a imagem não sabe de quem ela é.

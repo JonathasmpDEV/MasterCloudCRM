@@ -12,7 +12,7 @@ describe("resolveBranding", () => {
     expect(resolveBranding(undefined, undefined)).toEqual({
       name: DEFAULT_APP_NAME,
       logoUrl: null,
-      initial: "D",
+      initial: "M",
     });
   });
 
@@ -131,7 +131,7 @@ describe("nome do arquivo de códigos de recuperação", () => {
   it("deriva o prefixo da marca, sem acento e sem espaço", () => {
     expect(prefixoDoArquivo("Vendas Turbo")).toBe("vendas-turbo");
     expect(prefixoDoArquivo("Ótima Gestão")).toBe("otima-gestao");
-    expect(prefixoDoArquivo(DEFAULT_APP_NAME)).toBe("deskcommcrm");
+    expect(prefixoDoArquivo(DEFAULT_APP_NAME)).toBe("mastercloudcrm");
   });
 
   it("não devolve hífen pendurado nem repetido", () => {
@@ -165,7 +165,8 @@ describe("nome do arquivo de códigos de recuperação", () => {
  *     DENTRO de `app/` e escapava pela extensão. Esse é o pior deles: o nome vai
  *     para o app autenticador e fica no celular do usuário para sempre.
  *
- * MECANISMO. A varredura é `/deskcomm/i` sobre `.ts` e `.tsx` de `app/`,
+ * MECANISMO. A varredura é `/deskcomm|mastercloud/i` — o nome herdado do upstream E o
+ * nome deste fork, MasterCloud — sobre `.ts` e `.tsx` de `app/`,
  * `components/`, `lib/` e `workers/`. Cada arquivo com ocorrência precisa de uma
  * entrada em `MARCA_CONGELADA` com categoria, motivo escrito e o conjunto EXATO
  * de marcas encontradas. Arquivo novo reprova; marca nova em arquivo já
@@ -248,8 +249,8 @@ const MARCA_CONGELADA: Record<string, EntradaDeMarca> = {
   "lib/nuvemshop/config.ts": {
     categoria: "PROTOCOLO",
     motivo:
-      "User-Agent exigido pela Nuvemshop, que identifica a aplicação registrada na plataforma deles. Trocar pelo nome do revendedor descreveria uma aplicação que não existe lá",
-    marcas: ["deskcommcrm"],
+      "User-Agent exigido pela Nuvemshop, que identifica o aplicativo nas chamadas à plataforma deles (o contato vem do .env). Trocar pelo nome do revendedor descreveria um aplicativo que não existe lá",
+    marcas: ["mastercloudcrm"],
   },
   "lib/agenda/google/evento.ts": {
     categoria: "PROTOCOLO",
@@ -306,7 +307,7 @@ const MARCA_CONGELADA: Record<string, EntradaDeMarca> = {
     fase: 7,
     motivo:
       "template sem caminho de produção: sem rota em app/api/v1/cron/, sem linha no docker/scheduler/entrypoint.sh e, desde a limpeza do teto de orçamento (0159), sem chamador NENHUM — o único era workers/ai-budget-checker.cron.ts, que foi apagado por nunca ter tido agendador. Marcar isto não muda nada que um usuário veja, e a única 'prova' possível seria invocar a função à mão — o que prova a função, não o produto. Sai quando o alarme ganhar cron de verdade (ou quando o template for apagado junto)",
-    marcas: ["deskcommcrm"],
+    marcas: ["mastercloudcrm"],
   },
 
   // ─── DEV — fixture de teste; não embarca. ───
@@ -327,7 +328,7 @@ const MARCA_CONGELADA: Record<string, EntradaDeMarca> = {
     categoria: "PADRAO",
     motivo:
       "é a DEFINIÇÃO de DEFAULT_APP_NAME — o valor que aparece quando o operador não configurou marca nenhuma. Se esta linha sumir, some o padrão",
-    marcas: ["deskcommcrm"],
+    marcas: ["mastercloudcrm"],
   },
 };
 
@@ -400,7 +401,7 @@ function linhasQueContam(fonte: string): string[] {
 function marcasNoTexto(fonte: string): string[] {
   const achadas: string[] = [];
   for (const linha of linhasQueContam(fonte)) {
-    for (const casada of linha.matchAll(/[\w@.-]*deskcomm[\w@.-]*/gi)) {
+    for (const casada of linha.matchAll(/[\w@.-]*(?:deskcomm|mastercloud)[\w@.-]*/gi)) {
       // Pontuação encostada (o ponto final de "no DeskcommCRM.") não faz parte
       // do identificador e faria a lista mudar por causa de uma vírgula.
       achadas.push(casada[0].toLowerCase().replace(/^[.-]+/, "").replace(/[.-]+$/, ""));

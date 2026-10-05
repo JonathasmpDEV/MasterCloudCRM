@@ -4,13 +4,15 @@
  * Env vars `NUVEMSHOP_APP_ID`, `NUVEMSHOP_CLIENT_ID`, `NUVEMSHOP_CLIENT_SECRET`
  * are intentionally optional at build time. `getConfig()` returns null when any
  * of them is missing — callers must surface a `not_configured` error and the UI
- * shows a "configure env" card. Once Rafael drops in real keys, the integration
+ * shows a "configure env" card. Once the operator drops in real keys, the integration
  * activates without code changes.
  */
 
 export const NUVEMSHOP_AUTH_BASE = "https://www.tiendanube.com";
 export const NUVEMSHOP_API_BASE = "https://api.tiendanube.com/v1";
-export const APP_USER_AGENT = "DeskcommCRM (rafael@maudibrasil.com.br)";
+// A Nuvemshop (Tiendanube) exige "Nome do app (contato)" no User-Agent. O contato é de
+// quem opera a instalação, não do produto: vem do `.env` (NUVEMSHOP_CONTACT_EMAIL).
+export const APP_USER_AGENT = `MasterCloudCRM (${process.env.NUVEMSHOP_CONTACT_EMAIL || "contato-nao-configurado"})`;
 
 export interface NuvemshopConfig {
   appId: string;
