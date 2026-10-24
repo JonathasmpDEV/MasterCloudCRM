@@ -1142,6 +1142,8 @@
   animation: mc-rise 0.5s var(--ease-out) both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    MOVIMENTO DOS SOBREPOSTOS — a lei de `docs/design-system/07-motion-language.md`
