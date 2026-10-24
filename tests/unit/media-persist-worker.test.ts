@@ -7,10 +7,10 @@ const messageRow = {
   id: "msg1",
   organization_id: "org1",
   conversation_id: "conv1",
-  media_url: "http://localhost:3030/api/files/abc.jpg",
+  media_url: "http://localhost:3030/api/files/abc.jpg" as string | null,
   media_mime: "image/jpeg",
   media_storage_path: null as string | null,
-  metadata: { raw_type: "image" },
+  metadata: { raw_type: "image" } as Record<string, unknown>,
 };
 
 // Grupo nunca deriva (Task 8, controller A): a IA não serve grupos, e a
@@ -110,6 +110,8 @@ describe("persistMessageMedia", () => {
     updateEqMock.mockReset();
     rpcMock.mockReset().mockResolvedValue({ error: null });
     messageRow.media_storage_path = null;
+    messageRow.media_url = "http://localhost:3030/api/files/abc.jpg";
+    messageRow.metadata = { raw_type: "image" };
     conversationRow.is_group = false;
     conversationReadError = null;
     loggerWarnMock.mockReset();
@@ -151,6 +153,23 @@ describe("persistMessageMedia", () => {
     );
   });
 
+  it("histórico importado (#999): guarda no storage mas NÃO pede derivação (sem visão/transcrição paga)", async () => {
+    messageRow.metadata = { raw_type: "image", historico_importado: "true" };
+    const result = await persistMessageMedia(eventRow());
+    expect(result.status).toBe("ok");
+    expect(uploadMock).toHaveBeenCalled();
+    expect(updateEqMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        media_storage_path: "org1/conv1/msg1.jpg",
+        metadata: expect.objectContaining({ media_status: "stored", historico_importado: "true" }),
+      }),
+    );
+    expect(rpcMock).not.toHaveBeenCalledWith(
+      "emit_event",
+      expect.objectContaining({ p_event_type: "media.derive_requested" }),
+    );
+  });
+
   it("grupo: persiste mas NÃO pede derivação (a IA não serve grupos)", async () => {
     conversationRow.is_group = true;
     const result = await persistMessageMedia(eventRow());
@@ -186,6 +205,18 @@ describe("persistMessageMedia", () => {
         detail: "conexão recusada",
       }),
     );
+  });
+
+  it("mídia apagada pela retenção (#1534): pula com o motivo real e não baixa de novo", async () => {
+    // A poda anula `media_url` E `media_storage_path` e marca `expired`. Sem a
+    // guarda ANTES do `!media_url`, o detalhe diria "no media_url".
+    messageRow.media_url = null;
+    messageRow.metadata = { raw_type: "image", media_status: "expired" };
+    vi.mocked(fetchWahaMedia).mockClear();
+    const result = await persistMessageMedia(eventRow());
+    expect(result).toMatchObject({ status: "skipped", detail: "expired by retention" });
+    expect(fetchWahaMedia).not.toHaveBeenCalled();
+    expect(uploadMock).not.toHaveBeenCalled();
   });
 
   it("pula mensagem já persistida (idempotência)", async () => {
