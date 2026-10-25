@@ -222,11 +222,11 @@
   --agenda-pessoa-1: #ac4d40; /* telha */
   --agenda-pessoa-2: #bd7c20; /* âmbar */
   --agenda-pessoa-3: #7e6f01; /* oliva */
-  --agenda-pessoa-4: #11a19b; /* turquesa */
+  --agenda-pessoa-4: #399b83; /* turquesa — a #11a19b da main dá 2.96:1 no creme do fork */
   --agenda-pessoa-5: #0b7a9a; /* azul */
   --agenda-pessoa-6: #608bda; /* índigo */
   --agenda-pessoa-7: #7b5bad; /* violeta */
-  --agenda-pessoa-8: #cc77b1; /* framboesa */
+  --agenda-pessoa-8: #c46fa9; /* framboesa — a #cc77b1 da main dá 2.85:1 no creme do fork */
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -332,11 +332,11 @@
   --agenda-pessoa-1: #ac4d40; /* telha */
   --agenda-pessoa-2: #bd7c20; /* âmbar */
   --agenda-pessoa-3: #7e6f01; /* oliva */
-  --agenda-pessoa-4: #11a19b; /* turquesa */
+  --agenda-pessoa-4: #399b83; /* turquesa — a #11a19b da main dá 2.96:1 no creme do fork */
   --agenda-pessoa-5: #0b7a9a; /* azul */
   --agenda-pessoa-6: #608bda; /* índigo */
   --agenda-pessoa-7: #7b5bad; /* violeta */
-  --agenda-pessoa-8: #cc77b1; /* framboesa */
+  --agenda-pessoa-8: #c46fa9; /* framboesa — a #cc77b1 da main dá 2.85:1 no creme do fork */
 }
 
 [data-theme="dark"] {
